@@ -37,7 +37,7 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET"
         },
-        body: JSON.stringify(response),
+        body: JSON.stringify(responsthis),
         isBase64Encoded: false
     }
     await browser.close()

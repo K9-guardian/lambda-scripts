@@ -4,35 +4,34 @@ const cheerio = require('cheerio')
 async function fetchApi(word) {
     const response = await fetch(`https://www.dictionary.com/browse/${word}?s=t`)
     const $ = cheerio.load(await response.text())
-    const definitions = [],
-        sentences = []
+    const definitions = [], sentences = []
 
     const content = $('#top-definitions-section').parent()
 
-    $('[value]', content.html()).each(function (i, e) {
+    $('[value]', content.html()).each(function() {
         // If ordered list, then ignore
-        if ($(e).find('ol') != '') {
-            $(e).find('li').each(function (i, e) {
+        if ($(this).find('ol') != '') {
+            $(this).find('li').each(function() {
                 // If has sentence, add sentence and remove for definition
-                if ($(e).find('.luna-example') != '') {
-                    sentences.push($('.luna-example', e).text())
-                    $('.luna-example', e).remove()
+                if ($(this).find('.luna-example') != '') {
+                    sentences.push($('.luna-example', this).text())
+                    $('.luna-example', this).remove()
                 }
 
                 // Add definition
-                if ($(e).text() != '')
-                    definitions.push($(e).text())
+                if ($(this).text() != '')
+                    definitions.push($(this).text())
             })
         } else {
             // If has sentence, add sentence and remove for definition
-            if ($(e).find('.luna-example') != '') {
-                sentences.push($('.luna-example', e).text())
-                $('.luna-example', e).remove()
+            if ($(this).find('.luna-example') != '') {
+                sentences.push($('.luna-example', this).text())
+                $('.luna-example', this).remove()
             }
 
             // Add definition
-            if ($(e).text() != '')
-                definitions.push($(e).text())
+            if ($(this).text() != '')
+                definitions.push($(this).text())
         }
     })
 
@@ -42,4 +41,4 @@ async function fetchApi(word) {
     }
 }
 
-fetchApi('fewer').then(dict => console.log(dict))
+fetchApi('help').then(dict => console.log(dict))
