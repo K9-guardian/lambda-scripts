@@ -4,7 +4,8 @@
   "description": "Backend code to scrape Google Translate, Quizlet, and Dictionary.com. Runs locally with Puppeteer 5.5.0 and serverlessly with Chrome Aws Lambda 5.3.1",
   "scripts": {
     "translation": "node getTranslation.js",
-    "quizlet": "node getQuizlet.js"
+    "quizlet": "node getQuizlet.js",
+    "dictionary": "node getDictionary.js"
   },
   "author": "Krishna Girkar",
   "license": "ISC",

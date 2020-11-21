@@ -20,7 +20,8 @@ async function fetchApi(word) {
                 }
 
                 // Add definition
-                definitions.push($(e).text())
+                if ($(e).text() != '')
+                    definitions.push($(e).text())
             })
         } else {
             // If has sentence, add sentence and remove for definition
@@ -30,7 +31,8 @@ async function fetchApi(word) {
             }
 
             // Add definition
-            definitions.push($(e).text())
+            if ($(e).text() != '')
+                definitions.push($(e).text())
         }
     })
 
@@ -40,4 +42,4 @@ async function fetchApi(word) {
     }
 }
 
-fetchApi('law').then(dict => console.log(dict))
+fetchApi('fewer').then(dict => console.log(dict))
