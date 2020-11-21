@@ -1,6 +1,5 @@
 // const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer')
-const cheerio = require('cheerio')
 
 exports.handler = async (event) => {
     let browser = null
@@ -20,8 +19,7 @@ exports.handler = async (event) => {
     browser = await puppeteer.launch()
     let page = await browser.newPage()
     await page.goto(`${url}/?sl=${from}&tl=${to}&text=${text}&op=translate`, {waitUntil: "networkidle2"})
-    const $ = cheerio.load(await page.content())
-    const response = $('span[lang=es]').text()
+    const response = await page.evaluate(() => document.querySelector('[lang=es]').innerText)
 
     const result = {
         statusCode: 200,

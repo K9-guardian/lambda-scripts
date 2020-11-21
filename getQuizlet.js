@@ -1,6 +1,5 @@
 // const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer')
-const cheerio = require('cheerio')
 
 exports.handler = async (event) => {
     let browser = null
@@ -17,19 +16,19 @@ exports.handler = async (event) => {
     browser = await puppeteer.launch()
     let page = await browser.newPage()
     await page.goto(url, {waitUntil: "networkidle2"})
-    let response = {}
-    const english = [], spanish = []
+    let response = []
 
-    const $ = cheerio.load(await page.content())
-    $('.TermText.notranslate.lang-en').each((i, e) => english.push($(e).text()))
-    $('.TermText.notranslate.lang-es').each((i, e) => spanish.push($(e).text()))
+    const english = page.evaluate(() => Array.from(document.querySelectorAll('.TermText.notranslate.lang-en'), e => e.innerText))
+    const spanish = page.evaluate(() => Array.from(document.querySelectorAll('.TermText.notranslate.lang-es'), e => e.innerText))
+    
+    const words = await Promise.all([english, spanish])
 
     // Catch bad quizlet website
-    if (english.length == 0 || spanish.length == 0)
+    if (words[0].length == 0 || words[1].length == 0)
         return
     
-    for (let i = 0; i < english.length; i++)
-        response[english[i]] = spanish[i]
+    for (let i = 0; i < words[0].length; i++)
+        response.push({english: words[0][i], spanish: words[1][i]})
     
     const result = {
         statusCode: 200,
