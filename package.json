@@ -1,0 +1,16 @@
+{
+  "name": "lambda-scripts",
+  "version": "1.0.0",
+  "description": "Backend code to scrape Google Translate, Quizlet, and Dictionary.com. Runs locally with Puppeteer 5.5.0 and serverlessly with Chrome Aws Lambda 5.3.1",
+  "scripts": {
+    "translation": "node getTranslation.js",
+    "quizlet": "node getQuizlet.js"
+  },
+  "author": "Krishna Girkar",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "node-fetch": "^2.6.1",
+    "puppeteer": "^5.5.0"
+  }
+}
