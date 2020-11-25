@@ -10,7 +10,7 @@ exports.handler = async (event) => {
     const content = $('#top-definitions-section').parent()
 
     $('[value]', content.html()).each(function() {
-        // If ordered list, then ignore
+        // If ordered list, then iterate over ordered list
         if ($(this).find('ol') != '') {
             $(this).find('li').each(function() {
                 // If has sentence, add sentence and remove for definition
