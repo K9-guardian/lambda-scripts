@@ -1,7 +1,8 @@
 const fetch = require('node-fetch')
 const cheerio = require('cheerio')
 
-async function fetchApi(word) {
+exports.handler = async (event) => {
+    const word = event.queryStringParameters.word
     const response = await fetch(`https://www.dictionary.com/browse/${word}?s=t`)
     const $ = cheerio.load(await response.text())
     const definitions = [], sentences = []
@@ -41,4 +42,9 @@ async function fetchApi(word) {
     }
 }
 
-fetchApi('help').then(dict => console.log(dict))
+const testEvent = {
+    queryStringParameters: {
+        word: "help"
+    }
+}
+this.handler(testEvent).then(dict => console.log(dict))
