@@ -41,8 +41,14 @@ exports.handler = async (event) => {
     $('.expandable-content', '#examples-section').find('ul').children().each((i, e) => sentences.push($(e).find('p').text()))
 
     return {
-        definitions: definitions,
-        sentences: sentences
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "https://k9-guardian.github.io",
+            "Access-Control-Allow-Methods": "OPTIONS, POST, GET"
+        },
+        body: JSON.stringify({definitions: definitions, sentences: sentences}),
+        isBase64Encoded: false
     }
 }
 
