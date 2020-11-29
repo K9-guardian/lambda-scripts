@@ -9,32 +9,36 @@ exports.handler = async (event) => {
 
     const content = $('#top-definitions-section').parent()
 
-    $('[value]', content.html()).each(function() {
+    $('[value]', content.html()).each((i, e) => {
         // If ordered list, then iterate over ordered list
-        if ($(this).find('ol') != '') {
-            $(this).find('li').each(function() {
+        if ($(e).find('ol') != '') {
+            $(e).find('li').each((i, e) => {
                 // If has sentence, add sentence and remove for definition
-                if ($(this).find('.luna-example') != '') {
-                    sentences.push($('.luna-example', this).text())
-                    $('.luna-example', this).remove()
+                if ($(e).find('.luna-example') != '') {
+                    sentences.push($('.luna-example', e).text())
+                    $('.luna-example', e).remove()
                 }
 
                 // Add definition
-                if ($(this).text() != '')
-                    definitions.push($(this).text())
+                if ($(e).text() != '')
+                    definitions.push($(e).text())
             })
         } else {
             // If has sentence, add sentence and remove for definition
-            if ($(this).find('.luna-example') != '') {
-                sentences.push($('.luna-example', this).text())
-                $('.luna-example', this).remove()
+            if ($(e).find('.luna-example') != '') {
+                sentences.push($('.luna-example', e).text())
+                $('.luna-example', e).remove()
             }
 
             // Add definition
-            if ($(this).text() != '')
-                definitions.push($(this).text())
+            if ($(e).text() != '')
+                definitions.push($(e).text())
         }
+
     })
+
+    $('.default-content', '#examples-section').find('ul').children().each((i, e) => sentences.push($(e).find('p').text()))
+    $('.expandable-content', '#examples-section').find('ul').children().each((i, e) => sentences.push($(e).find('p').text()))
 
     return {
         definitions: definitions,
@@ -44,7 +48,7 @@ exports.handler = async (event) => {
 
 const testEvent = {
     queryStringParameters: {
-        word: "help"
+        word: "test"
     }
 }
 this.handler(testEvent).then(dict => console.log(dict))
