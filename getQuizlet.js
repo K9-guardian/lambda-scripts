@@ -37,7 +37,7 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "https://k9-guardian.github.io",
             "Access-Control-Allow-Methods": "OPTIONS, POST, GET"
         },
-        body: JSON.stringify(responsthis),
+        body: JSON.stringify(response),
         isBase64Encoded: false
     }
     await browser.close()
